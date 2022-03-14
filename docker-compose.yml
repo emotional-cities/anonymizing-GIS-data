@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+
+  postgis:
+    build: ./postgis/
+    environment:
+      POSTGRES_PASSWORD: G1rlP0w3r
+      POSTGRES_DB: geodb
+    expose:
+       - 5432
+    volumes: 
+      - postgis_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    container_name: postgis
+
+  jupyter:
+    build: .
+    ports:
+      - 8888:8888
+    container_name: jupyter 
+    volumes: 
+      - ./scripts:/home/jovyan
+    links:
+      - postgis
+
+
